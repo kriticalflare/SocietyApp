@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".register.RegisterFragment"
+    android:id="@+id/root_layout"
+    android:transitionGroup="true"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/login_anim"
+            android:layout_width="match_parent"
+            android:layout_height="256dp"
+            android:layout_margin="16dp"
+            app:lottie_rawRes="@raw/login"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:layout_weight="1"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/register_tv"
+            android:text="Register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            style="@style/TextAppearance.MaterialComponents.Headline4"
+            android:textAllCaps="true"
+            android:layout_margin="16dp"
+            />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/usernameTextfield"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your username"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="8dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:startIconDrawable="@drawable/ic_outline_account_circle_24"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordTextfield"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your password"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="8dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:startIconDrawable="@drawable/ic_outline_lock_24"
+            app:endIconMode="password_toggle"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/roomNumberTextfield"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your room number"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="8dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:startIconDrawable="@drawable/ic_outline_house_24"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/buildingNumberTextfield"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your building number"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="8dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:startIconDrawable="@drawable/ic_baseline_building_24"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/register_button"
+            android:layout_width="228dp"
+            android:padding="8dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="8dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:textAllCaps="true"
+            />
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="0dp"/>
+    </LinearLayout>
+
+
+</ScrollView>
