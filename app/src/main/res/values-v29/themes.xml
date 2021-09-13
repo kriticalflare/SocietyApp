@@ -1,6 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Base application theme. -->
     <style name="Theme.Community" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/Red_Violet</item>
@@ -13,7 +13,11 @@
 
         <!-- Customize your theme here. -->
         <item name="android:navigationBarColor">
-            #B3FFFFFF
+            @android:color/transparent
+        </item>
+
+        <item name="android:enforceNavigationBarContrast">
+            true
         </item>
 
         <!-- Optional, if your app is drawing behind the status bar also. -->
@@ -22,11 +26,5 @@
         </item>
         <item name="android:windowLightStatusBar">true</item>
 
-    </style>
-
-    <style name="Theme.Splash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/Red_Violet</item>
-        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
-        <item name="postSplashScreenTheme">@style/Theme.Community</item>
     </style>
 </resources>

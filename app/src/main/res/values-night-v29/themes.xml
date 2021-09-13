@@ -1,5 +1,6 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
     <style name="Theme.Community" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <item name="colorPrimary">@color/Red_Violet</item>
@@ -11,19 +12,12 @@
         <item name="colorOnSecondary">@color/Cloud_burst</item>
 
         <!-- Customize your theme here. -->
-        <item name="android:navigationBarColor">
-            #B3000000
-        </item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
 
-        <item name="android:enforceNavigationBarContrast">
-            true
-        </item>
-
+        <item name="android:enforceNavigationBarContrast">true</item>
 
         <!-- Optional, if your app is drawing behind the status bar also. -->
-        <item name="android:statusBarColor">
-            @android:color/transparent
-        </item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>
