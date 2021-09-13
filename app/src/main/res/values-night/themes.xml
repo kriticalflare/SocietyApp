@@ -9,16 +9,12 @@
         <item name="colorSecondary">@color/Cornflower</item>
         <item name="colorSecondaryVariant">#02B1B0</item>
         <item name="colorOnSecondary">@color/Cloud_burst</item>
+        <item name="android:fontFamily">@font/montserrat_regular</item>
 
         <!-- Customize your theme here. -->
         <item name="android:navigationBarColor">
             #B3000000
         </item>
-
-        <item name="android:enforceNavigationBarContrast">
-            true
-        </item>
-
 
         <!-- Optional, if your app is drawing behind the status bar also. -->
         <item name="android:statusBarColor">

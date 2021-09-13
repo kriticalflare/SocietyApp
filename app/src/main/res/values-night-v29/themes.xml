@@ -10,6 +10,7 @@
         <item name="colorSecondary">@color/Cornflower</item>
         <item name="colorSecondaryVariant">#02B1B0</item>
         <item name="colorOnSecondary">@color/Cloud_burst</item>
+        <item name="android:fontFamily">@font/montserrat_regular</item>
 
         <!-- Customize your theme here. -->
         <item name="android:navigationBarColor">@android:color/transparent</item>
