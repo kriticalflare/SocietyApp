@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import com.google.android.material.transition.MaterialSharedAxis;
 import com.kriticalflare.community.R;
 import com.kriticalflare.community.databinding.FragmentLoginBinding;
 import com.kriticalflare.community.databinding.FragmentRegisterBinding;
+
+import dev.chrisbanes.insetter.Insetter;
 
 
 public class RegisterFragment extends Fragment {
@@ -35,6 +38,10 @@ public class RegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentRegisterBinding.inflate(inflater, container, false);
+        Insetter.builder()
+                .paddingBottom(WindowInsetsCompat.Type.ime() + WindowInsetsCompat.Type.systemBars(), true)
+                .applyToView(binding.registerContainer);
+
         binding.registerButton.setOnClickListener(view -> {
             if (binding.usernameTextfield.getEditText() != null && binding.passwordTextfield.getEditText() != null) {
                 if (binding.usernameTextfield.getEditText().getText().toString().equals("krithik")

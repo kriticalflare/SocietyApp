@@ -9,6 +9,7 @@
     android:transitionGroup="true"
     >
     <LinearLayout
+        android:id="@+id/login_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -21,7 +22,6 @@
             app:lottie_rawRes="@raw/login"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            android:layout_weight="1"
             />
 
         <com.google.android.material.textview.MaterialTextView
@@ -93,8 +93,9 @@
             android:textAllCaps="true"
             />
         <View
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
             android:layout_weight="2"
-            android:layout_height="0dp"/>
+            />
     </LinearLayout>
 </ScrollView>

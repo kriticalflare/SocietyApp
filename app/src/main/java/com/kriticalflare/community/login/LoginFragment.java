@@ -2,6 +2,8 @@ package com.kriticalflare.community.login;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -13,6 +15,10 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.transition.MaterialSharedAxis;
 import com.kriticalflare.community.R;
 import com.kriticalflare.community.databinding.FragmentLoginBinding;
+
+import dev.chrisbanes.insetter.Insetter;
+import dev.chrisbanes.insetter.OnApplyInsetsListener;
+import dev.chrisbanes.insetter.ViewState;
 
 public class LoginFragment extends Fragment {
 
@@ -42,6 +48,9 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentLoginBinding.inflate(inflater, container, false);
+        Insetter.builder()
+                .paddingBottom(WindowInsetsCompat.Type.ime() + WindowInsetsCompat.Type.systemBars(), true)
+                .applyToView(binding.loginContainer);
         binding.loginButton.setOnClickListener(view -> {
             if (binding.usernameTextfield.getEditText() != null && binding.passwordTextfield.getEditText() != null) {
                 if (binding.usernameTextfield.getEditText().getText().toString().equals("krithik")
