@@ -21,5 +21,30 @@
             @android:color/transparent
         </item>
         <!-- Customize your theme here. -->
+        <item name="colorStateNavigationItem">@color/menu_item_color_state</item>
+        <item name="colorNavigationItemNormal">@color/athens_gray</item>
+        <item name="colorNavigationItemSelected">@color/tonys_pink</item>
+        <item name="colorNavigationItemBackgroundSelected">@color/don_juan</item>
+        <item name="colorNavigationItemBackgroundPressed">@color/mako</item>
+        <item name="drawableNavigationItemBackground">@drawable/menu_item_background_color_state</item>
+        <item name="android:listDivider">@color/shuttle_gray</item>
+    </style>
+
+
+    <style name="Theme.NavigationView" parent="Theme.Community">
+        <item name="colorControlHighlight">@android:color/transparent</item>
+    </style>
+
+    <style name="Widget.Custom.NavigationView" parent="Widget.Design.NavigationView">
+        <item name="itemIconTint">?attr/colorStateNavigationItem</item>
+        <item name="itemTextAppearance">@style/TextAppearance.Custom.Navigation.Item</item>
+        <item name="itemTextColor">?attr/colorStateNavigationItem</item>
+        <item name="itemBackground">?attr/drawableNavigationItemBackground</item>
+    </style>
+
+    <style name="TextAppearance.Custom.Navigation.Item" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/athens_gray</item>
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+        <item name="android:textSize">14dp</item>
     </style>
 </resources>

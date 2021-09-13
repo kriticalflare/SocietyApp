@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/eventsFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -27,4 +27,22 @@
         android:name="com.kriticalflare.community.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/eventsFragment"
+        android:name="com.kriticalflare.community.events.EventsFragment"
+        android:label="fragment_events"
+        tools:layout="@layout/fragment_events" />
+    <action
+        android:id="@+id/action_global_homeFragment"
+        app:destination="@id/homeFragment"
+        app:popUpTo="@id/eventsFragment"
+        app:popUpToInclusive="false" />
+    <action
+        android:id="@+id/action_global_loginFragment"
+        app:destination="@id/loginFragment"
+        app:popUpTo="@id/eventsFragment" />
+    <action
+        android:id="@+id/action_global_registerFragment"
+        app:destination="@id/registerFragment"
+        app:popUpTo="@id/eventsFragment" />
 </navigation>

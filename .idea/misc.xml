@@ -3,14 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Krithik/AndroidStudioProjects/Community/app/src/main/res/drawable/background_round_padded_pressed.xml" value="0.15260416666666668" />
+        <entry key="..\:/Users/Krithik/AndroidStudioProjects/Community/app/src/main/res/drawable/background_round_padded_selected.xml" value="0.15260416666666668" />
         <entry key="..\:/Users/Krithik/AndroidStudioProjects/Community/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.13541666666666666" />
         <entry key="..\:/Users/Krithik/AndroidStudioProjects/Community/app/src/main/res/drawable/ic_outline_lock_24.xml" value="0.13541666666666666" />
+        <entry key="..\:/Users/Krithik/AndroidStudioProjects/Community/app/src/main/res/drawable/menu_item_background_color_state.xml" value="0.15260416666666668" />
         <entry key="..\:/Users/Krithik/AndroidStudioProjects/Community/app/src/main/res/layout/activity_main.xml" value="0.11927083333333334" />
         <entry key="..\:/Users/Krithik/AndroidStudioProjects/Community/app/src/main/res/layout/bottom_nav_sheet.xml" value="0.24139492753623187" />
         <entry key="..\:/Users/Krithik/AndroidStudioProjects/Community/app/src/main/res/layout/fragment_events.xml" value="0.10104166666666667" />
         <entry key="..\:/Users/Krithik/AndroidStudioProjects/Community/app/src/main/res/layout/fragment_home.xml" value="0.1578125" />
         <entry key="..\:/Users/Krithik/AndroidStudioProjects/Community/app/src/main/res/layout/fragment_login.xml" value="0.11927083333333334" />
         <entry key="..\:/Users/Krithik/AndroidStudioProjects/Community/app/src/main/res/layout/fragment_register.xml" value="0.11927083333333334" />
+        <entry key="..\:/Users/Krithik/AndroidStudioProjects/Community/app/src/main/res/menu/nav_menu.xml" value="0.24166666666666667" />
       </map>
     </option>
   </component>
