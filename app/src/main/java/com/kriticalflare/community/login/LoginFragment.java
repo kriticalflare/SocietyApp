@@ -1,6 +1,10 @@
 package com.kriticalflare.community.login;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,11 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.transition.MaterialSharedAxis;
 import com.kriticalflare.community.AuthenticationViewModel;
@@ -21,8 +20,6 @@ import com.kriticalflare.community.R;
 import com.kriticalflare.community.databinding.FragmentLoginBinding;
 
 import dev.chrisbanes.insetter.Insetter;
-import dev.chrisbanes.insetter.OnApplyInsetsListener;
-import dev.chrisbanes.insetter.ViewState;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -36,6 +33,7 @@ public class LoginFragment extends Fragment {
     private String password;
     private AuthenticationViewModel authViewModel;
     private CompositeDisposable compositeDisposable;
+    public static final String TAG = "LOGIN_FRAGMENT";
 
     public LoginFragment() {
         // Required empty public constructor
@@ -73,7 +71,7 @@ public class LoginFragment extends Fragment {
                 }
             }
         });
-        binding.registerButton.setOnClickListener( view -> {
+        binding.registerButton.setOnClickListener(view -> {
             Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registerFragment);
         });
         return binding.getRoot();
@@ -83,12 +81,40 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         authViewModel = new ViewModelProvider(requireActivity()).get(AuthenticationViewModel.class);
+        compositeDisposable = new CompositeDisposable();
+        compositeDisposable.add(
+                authViewModel.isLoggedIn()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(new DisposableSubscriber<Boolean>() {
+                            @Override
+                            public void onNext(Boolean status) {
+                                Log.d(TAG, "LOGIN STATUS " + status);
+                                if (status) {
+                                    Navigation.findNavController(binding.getRoot()).popBackStack(R.id.eventsFragment, false);
+                                }
+                                request(1);
+                            }
+
+                            @Override
+                            public void onError(Throwable t) {
+
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
+                        })
+        );
+
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        compositeDisposable.dispose();
     }
 
 }
