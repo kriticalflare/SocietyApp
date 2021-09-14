@@ -1,13 +1,15 @@
 plugins {
     id 'com.android.application'
 }
+apply plugin: 'dagger.hilt.android.plugin'
+
 
 android {
     compileSdk 31
 
     defaultConfig {
         applicationId "com.kriticalflare.community"
-        minSdk 23
+        minSdk 24
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -38,6 +40,7 @@ dependencies {
     def core_version = "1.6.0"
     def splash_version = "1.0.0-alpha01"
     def insetter_version = "0.6.0"
+    def datastore_version = "1.0.0"
 
     // Java language implementation
     implementation "androidx.core:core:$core_version"
@@ -53,4 +56,9 @@ dependencies {
     implementation "com.airbnb.android:lottie:$lottie_version"
     implementation "androidx.core:core-splashscreen:$splash_version"
     implementation "dev.chrisbanes.insetter:insetter:$insetter_version"
+    implementation "androidx.datastore:datastore-preferences-rxjava3:$datastore_version"
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.1'
+    implementation "com.google.dagger:hilt-android:2.38.1"
+    annotationProcessor "com.google.dagger:hilt-compiler:2.38.1"
 }

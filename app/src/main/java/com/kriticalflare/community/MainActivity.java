@@ -22,8 +22,10 @@ import com.google.android.material.navigation.NavigationView;
 import com.kriticalflare.community.databinding.ActivityMainBinding;
 import com.kriticalflare.community.databinding.BottomNavSheetBinding;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import dev.chrisbanes.insetter.Insetter;
 
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
