@@ -26,9 +26,9 @@
 
         <item name="colorStateNavigationItem">@color/menu_item_color_state</item>
         <item name="colorNavigationItemNormal">@color/shark</item>
-        <item name="colorNavigationItemSelected">?attr/colorPrimaryVariant</item>
-        <item name="colorNavigationItemBackgroundSelected">?attr/colorPrimary</item>
-        <item name="colorNavigationItemBackgroundPressed">@color/mako</item>
+        <item name="colorNavigationItemSelected">?attr/colorPrimary</item>
+        <item name="colorNavigationItemBackgroundSelected">?attr/colorPrimaryVariant</item>
+        <item name="colorNavigationItemBackgroundPressed">?attr/colorPrimary</item>
         <item name="drawableNavigationItemBackground">@drawable/menu_item_background_color_state</item>
 
     </style>

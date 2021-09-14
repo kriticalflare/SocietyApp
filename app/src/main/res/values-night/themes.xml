@@ -23,9 +23,9 @@
         <!-- Customize your theme here. -->
         <item name="colorStateNavigationItem">@color/menu_item_color_state</item>
         <item name="colorNavigationItemNormal">@color/athens_gray</item>
-        <item name="colorNavigationItemSelected">@color/tonys_pink</item>
-        <item name="colorNavigationItemBackgroundSelected">@color/don_juan</item>
-        <item name="colorNavigationItemBackgroundPressed">@color/mako</item>
+        <item name="colorNavigationItemSelected">?attr/colorPrimary</item>
+        <item name="colorNavigationItemBackgroundSelected">?attr/colorPrimaryVariant</item>
+        <item name="colorNavigationItemBackgroundPressed">?attr/colorPrimary</item>
         <item name="drawableNavigationItemBackground">@drawable/menu_item_background_color_state</item>
         <item name="android:listDivider">@color/shuttle_gray</item>
     </style>
