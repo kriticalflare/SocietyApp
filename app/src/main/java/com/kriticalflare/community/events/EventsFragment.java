@@ -57,31 +57,6 @@ public class EventsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         authViewModel = new ViewModelProvider(requireActivity()).get(AuthenticationViewModel.class);
         compositeDisposable = new CompositeDisposable();
-
-//        authViewModel.isLoggedIn()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeWith(new Subscriber<Boolean>() {
-//                    @Override
-//                    public void onSubscribe(Subscription s) {
-//                        Log.d(TAG, "onSubscribe: ");
-//                    }
-//
-//                    @Override
-//                    public void onNext(Boolean aBoolean) {
-//                        Log.d(TAG, "onNext: " + aBoolean);
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable t) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
         compositeDisposable.add(
                 authViewModel.isLoggedIn()
                         .subscribeOn(Schedulers.io())
