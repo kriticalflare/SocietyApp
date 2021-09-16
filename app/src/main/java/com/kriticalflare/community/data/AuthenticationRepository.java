@@ -4,6 +4,8 @@ import androidx.datastore.preferences.core.MutablePreferences;
 import androidx.datastore.preferences.core.Preferences;
 import androidx.datastore.preferences.core.PreferencesKeys;
 import androidx.datastore.rxjava3.RxDataStore;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.kriticalflare.community.model.LoginUser;
 import com.kriticalflare.community.model.RegisterUser;
@@ -28,12 +30,16 @@ public class AuthenticationRepository {
     private final AuthService authService;
     private final EventEmitter<String> emitter;
     public EventSource<String> errorEvents;
+    private final MutableLiveData<Boolean> _loadingLiveData;
+    public LiveData<Boolean> loading;
 
     @Inject
     AuthenticationRepository(RxDataStore<Preferences> dataStore, AuthService authService) {
         this.dataStore = dataStore;
         this.authService = authService;
         emitter = new EventEmitter<>();
+        _loadingLiveData = new MutableLiveData<>(false);
+        loading = _loadingLiveData;
         errorEvents = emitter;
     }
 
@@ -54,35 +60,44 @@ public class AuthenticationRepository {
     }
 
     public void register(RegisterUser user){
+        _loadingLiveData.setValue(true);
         authService.registerUser(user).enqueue(new Callback<RegisterUser>() {
             @Override
             public void onResponse(Call<RegisterUser> call, Response<RegisterUser> response) {
                 if(response.isSuccessful()){
                     emitter.emit("Registration Successful");
+                } else {
+                    _loadingLiveData.postValue(false);
+                    emitter.emit(response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<RegisterUser> call, Throwable t) {
+                _loadingLiveData.postValue(false);
                 emitter.emit("Registration failed");
             }
         });
     }
 
     public void login(LoginUser user){
+        _loadingLiveData.setValue(true);
         authService.login(user).enqueue(new Callback<LoginUser>() {
             @Override
             public void onResponse(Call<LoginUser> call, Response<LoginUser> response) {
                 if(response.isSuccessful()){
+                    _loadingLiveData.postValue(false);
                     saveEmail(user.email);
                     saveLoginStatus(true);
                 } else {
+                    _loadingLiveData.postValue(false);
                     emitter.emit("Check your credentials");
                 }
             }
 
             @Override
             public void onFailure(Call<LoginUser> call, Throwable t) {
+                _loadingLiveData.postValue(false);
                 emitter.emit("Login failed");
                 saveLoginStatus(false);
             }

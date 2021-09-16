@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -108,6 +109,15 @@ public class LoginFragment extends Fragment {
                         })
         );
         eventSubscription = authViewModel.eventMessages.startListening(this::makeSnackBar);
+        authViewModel.loading.observe(getViewLifecycleOwner(), loading -> {
+            if(loading){
+                binding.loginButton.setVisibility(View.INVISIBLE);
+                binding.progressIndicator.setVisibility(View.VISIBLE);
+            } else {
+                binding.loginButton.setVisibility(View.VISIBLE);
+                binding.progressIndicator.setVisibility(View.INVISIBLE);
+            }
+        });
 
     }
 

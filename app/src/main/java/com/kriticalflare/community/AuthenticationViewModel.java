@@ -1,5 +1,6 @@
 package com.kriticalflare.community;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.kriticalflare.community.data.AuthenticationRepository;
@@ -15,13 +16,14 @@ import io.reactivex.rxjava3.core.Flowable;
 @HiltViewModel
 public class AuthenticationViewModel extends ViewModel {
     private final AuthenticationRepository authRepo;
-
+    public LiveData<Boolean> loading;
     public final EventSource<String> eventMessages;
 
     @Inject
     AuthenticationViewModel(AuthenticationRepository authRepo) {
         this.authRepo = authRepo;
         this.eventMessages = authRepo.errorEvents;
+        this.loading = authRepo.loading;
     }
 
     public void register(RegisterUser user){

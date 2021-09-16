@@ -86,6 +86,15 @@ public class RegisterFragment extends Fragment {
         authViewModel = new ViewModelProvider(requireActivity()).get(AuthenticationViewModel.class);
 
         eventSubscription =  authViewModel.eventMessages.startListening(this::makeSnackBar);
+        authViewModel.loading.observe(getViewLifecycleOwner(), loading -> {
+            if(loading){
+                binding.registerButton.setVisibility(View.INVISIBLE);
+                binding.progressIndicator.setVisibility(View.VISIBLE);
+            } else {
+                binding.registerButton.setVisibility(View.VISIBLE);
+                binding.progressIndicator.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 
     private void makeSnackBar(String message) {

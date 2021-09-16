@@ -41,6 +41,7 @@ dependencies {
     def splash_version = "1.0.0-alpha01"
     def insetter_version = "0.6.0"
     def datastore_version = "1.0.0"
+    def hilt_version = "2.38.1"
 
     // Java language implementation
     implementation "androidx.core:core:$core_version"
@@ -59,12 +60,13 @@ dependencies {
     implementation "androidx.datastore:datastore-preferences-rxjava3:$datastore_version"
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
     implementation 'io.reactivex.rxjava3:rxjava:3.1.1'
-    implementation "com.google.dagger:hilt-android:2.38.1"
-    annotationProcessor "com.google.dagger:hilt-compiler:2.38.1"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    annotationProcessor "com.google.dagger:hilt-compiler:$hilt_version"
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation 'com.google.code.gson:gson:2.8.8'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
     implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
     implementation 'com.github.Zhuinden:event-emitter:1.2.0'
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 }
