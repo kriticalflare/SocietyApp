@@ -46,20 +46,23 @@ public class RegisterFragment extends Fragment {
                 .applyToView(binding.registerContainer);
 
         binding.registerButton.setOnClickListener(view -> {
-            if (binding.emailTextField.getEditText() != null
+            if (binding.nameTextField.getEditText() != null
+                    && binding.emailTextField.getEditText() != null
                     && binding.passwordTextfield.getEditText() != null
                     && binding.roomNumberTextfield.getEditText() != null
                     && binding.buildingNumberTextfield.getEditText() != null) {
+                String name = binding.emailTextField.getEditText().getText().toString();
                 String email = binding.emailTextField.getEditText().getText().toString();
                 String password = binding.passwordTextfield.getEditText().getText().toString();
                 String roomNumber = binding.roomNumberTextfield.getEditText().getText().toString();
                 String buildingNumber = binding.buildingNumberTextfield.getEditText().getText().toString();
 
-                if (!email.isEmpty()
+                if (!name.isEmpty()
+                        && !email.isEmpty()
                         && !password.isEmpty()
                         && !roomNumber.isEmpty()
                         && !buildingNumber.isEmpty()) {
-                    RegisterUser user = new RegisterUser(email, password, roomNumber, buildingNumber);
+                    RegisterUser user = new RegisterUser(name, email, password, roomNumber, buildingNumber);
                     authViewModel.register(user);
                 } else {
                     makeSnackBar("Please enter all details");
@@ -85,9 +88,9 @@ public class RegisterFragment extends Fragment {
         });
         authViewModel = new ViewModelProvider(requireActivity()).get(AuthenticationViewModel.class);
 
-        eventSubscription =  authViewModel.eventMessages.startListening(this::makeSnackBar);
+        eventSubscription = authViewModel.eventMessages.startListening(this::makeSnackBar);
         authViewModel.loading.observe(getViewLifecycleOwner(), loading -> {
-            if(loading){
+            if (loading) {
                 binding.registerButton.setVisibility(View.INVISIBLE);
                 binding.progressIndicator.setVisibility(View.VISIBLE);
             } else {

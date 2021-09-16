@@ -18,7 +18,7 @@ public class RegisterUser {
     @SerializedName("room_number")
     private String roomNumber;
 
-    @SerializedName("buil_number")
+    @SerializedName("building_number")
     private String buildingNumber;
 
     @SerializedName("password")
@@ -27,7 +27,8 @@ public class RegisterUser {
     @SerializedName("email")
     private String email;
 
-    public RegisterUser(String email, String password, String roomNumber, String buildingNumber) {
+    public RegisterUser(String name, String email, String password, String roomNumber, String buildingNumber) {
+        this.name = name;
         this.email = email;
         this.password = password;
         this.roomNumber = roomNumber;
