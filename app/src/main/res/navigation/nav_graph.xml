@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/eventsFragment">
+    app:startDestination="@id/meetingsFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -35,14 +35,25 @@
     <action
         android:id="@+id/action_global_homeFragment"
         app:destination="@id/homeFragment"
-        app:popUpTo="@id/eventsFragment"
+        app:popUpTo="@id/meetingsFragment"
         app:popUpToInclusive="false" />
     <action
         android:id="@+id/action_global_loginFragment"
         app:destination="@id/loginFragment"
-        app:popUpTo="@id/eventsFragment" />
+        app:popUpTo="@id/meetingsFragment"
+        app:popUpToInclusive="false" />
     <action
         android:id="@+id/action_global_registerFragment"
         app:destination="@id/registerFragment"
-        app:popUpTo="@id/eventsFragment" />
+        app:popUpTo="@id/meetingsFragment"
+        app:popUpToInclusive="false" />
+    <fragment
+        android:id="@+id/meetingsFragment"
+        android:name="com.kriticalflare.community.meetings.ui.MeetingsFragment"
+        android:label="fragment_meetings"
+        tools:layout="@layout/fragment_meetings" />
+    <action
+        android:id="@+id/action_global_eventsFragment"
+        app:destination="@id/eventsFragment"
+        app:popUpTo="@id/meetingsFragment" />
 </navigation>

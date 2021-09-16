@@ -92,7 +92,7 @@ public class LoginFragment extends Fragment {
                             public void onNext(Boolean status) {
                                 Log.d(TAG, "LOGIN STATUS " + status);
                                 if (status) {
-                                    Navigation.findNavController(binding.getRoot()).popBackStack(R.id.eventsFragment, false);
+                                    Navigation.findNavController(binding.getRoot()).popBackStack(R.id.meetingsFragment, false);
                                 }
                                 request(1);
                             }

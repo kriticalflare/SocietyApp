@@ -65,7 +65,7 @@ public class AuthenticationRepository {
             @Override
             public void onResponse(Call<RegisterUser> call, Response<RegisterUser> response) {
                 if(response.isSuccessful()){
-                    _loadingLiveData.setValue(false);
+                    _loadingLiveData.postValue(false);
                     emitter.emit("Registration Successful");
                 } else {
                     _loadingLiveData.setValue(false);
@@ -87,18 +87,18 @@ public class AuthenticationRepository {
             @Override
             public void onResponse(Call<LoginUser> call, Response<LoginUser> response) {
                 if(response.isSuccessful()){
-                    _loadingLiveData.setValue(false);
+                    _loadingLiveData.postValue(false);
                     saveEmail(user.email);
                     saveLoginStatus(true);
                 } else {
-                    _loadingLiveData.setValue(false);
+                    _loadingLiveData.postValue(false);
                     emitter.emit("Check your credentials");
                 }
             }
 
             @Override
             public void onFailure(Call<LoginUser> call, Throwable t) {
-                _loadingLiveData.setValue(false);
+                _loadingLiveData.postValue(false);
                 emitter.emit("Login failed");
                 saveLoginStatus(false);
             }

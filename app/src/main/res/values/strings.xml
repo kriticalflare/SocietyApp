@@ -2,4 +2,7 @@
     <string name="app_name">Community</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="network_issue_message">Please check your Internet Connection</string>
+    <string name="api_error_message">API ERROR</string>
+    <string name="date_representation">Date: %1$s</string>
 </resources>

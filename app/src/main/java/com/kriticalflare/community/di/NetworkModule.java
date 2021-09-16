@@ -1,6 +1,8 @@
 package com.kriticalflare.community.di;
 
+import com.kriticalflare.community.network.ApiService;
 import com.kriticalflare.community.network.AuthService;
+import com.kriticalflare.community.util.AppExecutor;
 import com.kriticalflare.community.util.Constants;
 
 import javax.inject.Singleton;
@@ -27,12 +29,25 @@ public class NetworkModule {
 
     @Singleton
     @Provides
-    public AuthService provideAuthClientApi(OkHttpClient okHttpClient) {
+    public AuthService provideAuthClientApi(OkHttpClient okHttpClient, AppExecutor appExecutor) {
         return new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
+                .callbackExecutor(appExecutor.networkIO())
                 .build()
                 .create(AuthService.class);
+    }
+
+    @Singleton
+    @Provides
+    public ApiService provideApiClient(OkHttpClient okHttpClient, AppExecutor appExecutor) {
+        return new Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .callbackExecutor(appExecutor.networkIO())
+                .build()
+                .create(ApiService.class);
     }
 }

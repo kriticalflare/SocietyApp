@@ -85,12 +85,16 @@ public class MainActivity extends AppCompatActivity {
             switch (navDestination.getId()){
                 case R.id.eventsFragment:
                     setSheetVisible(true);
-                    navSheetBinding.navigationView.setCheckedItem(R.id.nav_events);
                     navSheetBinding.myToolbar.setTitle("Events");
                     break;
                 case R.id.homeFragment:
                     setSheetVisible(true);
                     navSheetBinding.myToolbar.setTitle("Home");
+                    break;
+                case R.id.meetingsFragment:
+                    setSheetVisible(true);
+                    navSheetBinding.navigationView.setCheckedItem(R.id.nav_meetings);
+                    navSheetBinding.myToolbar.setTitle("Meetings");
                     break;
                 case R.id.loginFragment:
                 case R.id.registerFragment:
@@ -103,11 +107,11 @@ public class MainActivity extends AppCompatActivity {
 
         navSheetBinding.navigationView.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()){
-                case R.id.nav_events:
-                    navController.popBackStack(R.id.eventsFragment, false);
-                    break;
                 case R.id.nav_meetings:
-                    navController.navigate(R.id.action_global_homeFragment);
+                    navController.popBackStack(R.id.meetingsFragment, false);
+                    break;
+                case R.id.nav_events:
+                    navController.navigate(R.id.action_global_eventsFragment);
                     break;
                 case R.id.nav_complaints:
                     navController.navigate(R.id.action_global_homeFragment);
