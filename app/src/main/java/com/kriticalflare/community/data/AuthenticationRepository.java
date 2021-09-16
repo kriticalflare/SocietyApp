@@ -76,12 +76,15 @@ public class AuthenticationRepository {
                 if(response.isSuccessful()){
                     saveEmail(user.email);
                     saveLoginStatus(true);
+                } else {
+                    emitter.emit("Check your credentials");
                 }
             }
 
             @Override
             public void onFailure(Call<LoginUser> call, Throwable t) {
                 emitter.emit("Login failed");
+                saveLoginStatus(false);
             }
         });
     }

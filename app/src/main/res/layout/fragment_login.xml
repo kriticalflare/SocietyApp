@@ -35,10 +35,10 @@
             android:layout_margin="16dp"
             />
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/usernameTextfield"
+            android:id="@+id/emailTextfield"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter your username"
+            android:hint="Enter your email"
             android:layout_marginHorizontal="16dp"
             android:layout_marginVertical="8dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -93,6 +93,7 @@
             android:textAllCaps="true"
             />
         <View
+            android:id="@+id/spacer"
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:layout_weight="2"

@@ -18,6 +18,8 @@ import com.google.android.material.transition.MaterialSharedAxis;
 import com.kriticalflare.community.AuthenticationViewModel;
 import com.kriticalflare.community.R;
 import com.kriticalflare.community.databinding.FragmentLoginBinding;
+import com.kriticalflare.community.model.LoginUser;
+import com.zhuinden.eventemitter.EventSource;
 
 import dev.chrisbanes.insetter.Insetter;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -29,11 +31,10 @@ public class LoginFragment extends Fragment {
 
 
     private FragmentLoginBinding binding;
-    private String username;
-    private String password;
     private AuthenticationViewModel authViewModel;
     private CompositeDisposable compositeDisposable;
     public static final String TAG = "LOGIN_FRAGMENT";
+    private EventSource.NotificationToken eventSubscription;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -60,20 +61,19 @@ public class LoginFragment extends Fragment {
                 .paddingBottom(WindowInsetsCompat.Type.ime() + WindowInsetsCompat.Type.systemBars(), true)
                 .applyToView(binding.loginContainer);
         binding.loginButton.setOnClickListener(view -> {
-            if (binding.usernameTextfield.getEditText() != null && binding.passwordTextfield.getEditText() != null) {
-                if (binding.usernameTextfield.getEditText().getText().toString().equals("krithik")
-                        && binding.passwordTextfield.getEditText().getText().toString().equals("12345678")) {
-                    authViewModel.setLoggedIn(true);
-//                    Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_homeFragment);
+            if (binding.emailTextfield.getEditText() != null
+                    && binding.passwordTextfield.getEditText() != null
+            ) {
+                String email = binding.emailTextfield.getEditText().getText().toString();
+                String password = binding.passwordTextfield.getEditText().getText().toString();
+                if (!email.isEmpty() && !password.isEmpty()) {
+                    authViewModel.login(new LoginUser(email, password));
                 } else {
-                    Snackbar.make(this.binding.rootLayout, "Check your credentials", Snackbar.LENGTH_LONG)
-                            .show();
+                    makeSnackBar("Check your credentials");
                 }
             }
         });
-        binding.registerButton.setOnClickListener(view -> {
-            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registerFragment);
-        });
+        binding.registerButton.setOnClickListener(view -> Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registerFragment));
         return binding.getRoot();
     }
 
@@ -107,7 +107,14 @@ public class LoginFragment extends Fragment {
                             }
                         })
         );
+        eventSubscription = authViewModel.eventMessages.startListening(this::makeSnackBar);
 
+    }
+
+    private void makeSnackBar(String message) {
+        Snackbar.make(this.binding.rootLayout, message, Snackbar.LENGTH_LONG)
+                .setAnchorView(this.binding.spacer)
+                .show();
     }
 
     @Override
@@ -115,6 +122,7 @@ public class LoginFragment extends Fragment {
         super.onDestroyView();
         binding = null;
         compositeDisposable.dispose();
+        eventSubscription.stopListening();
     }
 
 }

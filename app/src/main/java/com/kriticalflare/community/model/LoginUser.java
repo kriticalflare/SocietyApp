@@ -8,4 +8,9 @@ public class LoginUser {
 
     @SerializedName("email")
     public String email;
+
+    public LoginUser(String email,String password) {
+        this.email = email;
+        this.password = password;
+    }
 }

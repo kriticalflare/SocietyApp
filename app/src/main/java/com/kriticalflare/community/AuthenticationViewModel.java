@@ -3,6 +3,7 @@ package com.kriticalflare.community;
 import androidx.lifecycle.ViewModel;
 
 import com.kriticalflare.community.data.AuthenticationRepository;
+import com.kriticalflare.community.model.LoginUser;
 import com.kriticalflare.community.model.RegisterUser;
 import com.zhuinden.eventemitter.EventSource;
 
@@ -25,6 +26,10 @@ public class AuthenticationViewModel extends ViewModel {
 
     public void register(RegisterUser user){
         authRepo.register(user);
+    }
+
+    public void login(LoginUser user){
+        authRepo.login(user);
     }
 
     public Flowable<Boolean> isLoggedIn() {
