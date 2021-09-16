@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.splashscreen.SplashScreen;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomSheetBehavior<View> bottomSheetBehavior;
     private BottomNavSheetBinding navSheetBinding;
     private NavController navController;
+    private AuthenticationViewModel authViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         Insetter.builder()
                 .paddingBottom(WindowInsetsCompat.Type.navigationBars(),true)
                 .applyToView(navSheetBinding.myToolbar);
+
+        authViewModel = new ViewModelProvider(this).get(AuthenticationViewModel.class);
 
         bottomSheetBehavior = BottomSheetBehavior.from(navSheetBinding.bottomNavigationContainer);
         TypedValue tv = new TypedValue();
@@ -88,41 +92,40 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.loginFragment:
                     navSheetBinding.myToolbar.setTitle("Login");
+                    navSheetBinding.navigationView.setCheckedItem(R.id.nav_none);
                     break;
                 case R.id.registerFragment:
                     navSheetBinding.myToolbar.setTitle("Register");
+                    navSheetBinding.navigationView.setCheckedItem(R.id.nav_none);
                     break;
             }
 
         });
 
-        navSheetBinding.navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.nav_events:
-                        navController.popBackStack(R.id.eventsFragment, false);
-                        toggleBottomSheet(bottomSheetBehavior);
-                        break;
-                    case R.id.nav_meetings:
-                        navController.navigate(R.id.action_global_homeFragment);
-                        toggleBottomSheet(bottomSheetBehavior);
-                        break;
-                    case R.id.nav_complaints:
-                        navController.navigate(R.id.action_global_loginFragment);
-                        toggleBottomSheet(bottomSheetBehavior);
-                        break;
-                    case R.id.nav_parking:
-                        navController.navigate(R.id.action_global_registerFragment);
-                        toggleBottomSheet(bottomSheetBehavior);
-                        break;
-                    case R.id.nav_emergency:
-                        navController.navigate(R.id.action_global_homeFragment);
-                        toggleBottomSheet(bottomSheetBehavior);
-                        break;
-                }
-                return true;
+        navSheetBinding.navigationView.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()){
+                case R.id.nav_events:
+                    navController.popBackStack(R.id.eventsFragment, false);
+                    break;
+                case R.id.nav_meetings:
+                    navController.navigate(R.id.action_global_homeFragment);
+                    break;
+                case R.id.nav_complaints:
+                    navController.navigate(R.id.action_global_loginFragment);
+                    break;
+                case R.id.nav_parking:
+                    navController.navigate(R.id.action_global_registerFragment);
+                    break;
+                case R.id.nav_emergency:
+                    navController.navigate(R.id.action_global_homeFragment);
+                    break;
+                case R.id.nav_logout:
+                    authViewModel.logout();
+                    navSheetBinding.navigationView.setCheckedItem(R.id.nav_none);
+                    break;
             }
+            toggleBottomSheet(bottomSheetBehavior);
+            return true;
         });
 
         binding.scrim.setOnClickListener( v -> {

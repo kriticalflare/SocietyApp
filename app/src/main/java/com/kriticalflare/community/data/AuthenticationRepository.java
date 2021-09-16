@@ -89,6 +89,11 @@ public class AuthenticationRepository {
         });
     }
 
+    public void logout(){
+        saveEmail("");
+        saveLoginStatus(false);
+    }
+
     public Flowable<Boolean> getLoginStatus() {
         return dataStore.data().map(preferences -> Optional.ofNullable(preferences.get(KEY_IS_LOGGED_IN)).orElse(false));
     }

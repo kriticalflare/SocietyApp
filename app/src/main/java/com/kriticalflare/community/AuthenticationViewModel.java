@@ -32,6 +32,10 @@ public class AuthenticationViewModel extends ViewModel {
         authRepo.login(user);
     }
 
+    public void logout(){
+        authRepo.logout();
+    }
+
     public Flowable<Boolean> isLoggedIn() {
         return authRepo.getLoginStatus();
     }

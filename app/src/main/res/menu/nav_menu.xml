@@ -24,6 +24,14 @@
             android:id="@+id/nav_emergency"
             android:icon="@drawable/ic_outline_call_24"
             android:title="Emergency" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_outline_exit_to_app_24"
+            android:title="Logout" />
+        <item
+            android:id="@+id/nav_none"
+            android:title=""
+            android:visible="false"/>
     </group>
 
 </menu>
