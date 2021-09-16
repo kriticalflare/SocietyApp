@@ -84,18 +84,17 @@ public class MainActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener((navController, navDestination, bundle) -> {
             switch (navDestination.getId()){
                 case R.id.eventsFragment:
+                    setSheetVisible(true);
                     navSheetBinding.navigationView.setCheckedItem(R.id.nav_events);
                     navSheetBinding.myToolbar.setTitle("Events");
                     break;
                 case R.id.homeFragment:
+                    setSheetVisible(true);
                     navSheetBinding.myToolbar.setTitle("Home");
                     break;
                 case R.id.loginFragment:
-                    navSheetBinding.myToolbar.setTitle("Login");
-                    navSheetBinding.navigationView.setCheckedItem(R.id.nav_none);
-                    break;
                 case R.id.registerFragment:
-                    navSheetBinding.myToolbar.setTitle("Register");
+                    setSheetVisible(false);
                     navSheetBinding.navigationView.setCheckedItem(R.id.nav_none);
                     break;
             }
@@ -111,10 +110,10 @@ public class MainActivity extends AppCompatActivity {
                     navController.navigate(R.id.action_global_homeFragment);
                     break;
                 case R.id.nav_complaints:
-                    navController.navigate(R.id.action_global_loginFragment);
+                    navController.navigate(R.id.action_global_homeFragment);
                     break;
                 case R.id.nav_parking:
-                    navController.navigate(R.id.action_global_registerFragment);
+                    navController.navigate(R.id.action_global_homeFragment);
                     break;
                 case R.id.nav_emergency:
                     navController.navigate(R.id.action_global_homeFragment);
@@ -164,6 +163,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         setContentView(root);
+    }
+
+    private void setSheetVisible(boolean visiblity){
+        if(visiblity){
+            if(navSheetBinding.bottomNavigationContainer.getVisibility() != View.VISIBLE){
+                navSheetBinding.bottomNavigationContainer.setVisibility(View.VISIBLE);
+            }
+        } else {
+            if(navSheetBinding.bottomNavigationContainer.getVisibility() != View.GONE){
+                navSheetBinding.bottomNavigationContainer.setVisibility(View.GONE);
+            }
+        }
     }
 
     private void toggleBottomSheet(BottomSheetBehavior<View> bottomSheetBehavior) {

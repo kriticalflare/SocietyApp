@@ -102,7 +102,6 @@ public class RegisterFragment extends Fragment {
 
     private void makeSnackBar(String message) {
         Snackbar.make(this.binding.rootLayout, message, Snackbar.LENGTH_LONG)
-                .setAnchorView(this.binding.spacer)
                 .show();
     }
 
