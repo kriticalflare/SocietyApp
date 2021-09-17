@@ -50,6 +50,8 @@ public class LoginFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         this.setExitTransition(new MaterialSharedAxis(MaterialSharedAxis.X, /* forward= */ true));
         this.setReenterTransition(new MaterialSharedAxis(MaterialSharedAxis.X, false));
+        this.setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
+        this.setReturnTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, false));
         super.onCreate(savedInstanceState);
     }
 
