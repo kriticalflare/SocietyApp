@@ -68,7 +68,7 @@ public class AuthenticationRepository {
                     _loadingLiveData.postValue(false);
                     emitter.emit("Registration Successful");
                 } else {
-                    _loadingLiveData.setValue(false);
+                    _loadingLiveData.postValue(false);
                     emitter.emit(response.message());
                 }
             }
