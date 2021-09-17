@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.kriticalflare.community.model.LoginUser;
 import com.kriticalflare.community.model.RegisterUser;
 import com.kriticalflare.community.network.AuthService;
+import com.kriticalflare.community.util.AppExecutor;
 import com.zhuinden.eventemitter.EventEmitter;
 import com.zhuinden.eventemitter.EventSource;
 
@@ -32,11 +33,13 @@ public class AuthenticationRepository {
     public EventSource<String> errorEvents;
     private final MutableLiveData<Boolean> _loadingLiveData;
     public LiveData<Boolean> loading;
+    private AppExecutor appExecutor;
 
     @Inject
-    AuthenticationRepository(RxDataStore<Preferences> dataStore, AuthService authService) {
+    AuthenticationRepository(RxDataStore<Preferences> dataStore, AuthService authService, AppExecutor appExecutor) {
         this.dataStore = dataStore;
         this.authService = authService;
+        this.appExecutor = appExecutor;
         emitter = new EventEmitter<>();
         _loadingLiveData = new MutableLiveData<>(false);
         loading = _loadingLiveData;
@@ -59,17 +62,22 @@ public class AuthenticationRepository {
         });
     }
 
-    public void register(RegisterUser user){
+    public void register(RegisterUser user) {
         _loadingLiveData.setValue(true);
         authService.registerUser(user).enqueue(new Callback<RegisterUser>() {
             @Override
             public void onResponse(Call<RegisterUser> call, Response<RegisterUser> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     _loadingLiveData.postValue(false);
-                    emitter.emit("Registration Successful");
+                    appExecutor.mainThread().execute(() -> {
+                        emitter.emit("Registration Successful");
+                    });
+
                 } else {
                     _loadingLiveData.postValue(false);
-                    emitter.emit(response.message());
+                    appExecutor.mainThread().execute(() -> {
+                        emitter.emit(response.message());
+                    });
                 }
             }
 
@@ -81,31 +89,36 @@ public class AuthenticationRepository {
         });
     }
 
-    public void login(LoginUser user){
+    public void login(LoginUser user) {
         _loadingLiveData.setValue(true);
         authService.login(user).enqueue(new Callback<LoginUser>() {
             @Override
             public void onResponse(Call<LoginUser> call, Response<LoginUser> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     _loadingLiveData.postValue(false);
                     saveEmail(user.email);
                     saveLoginStatus(true);
                 } else {
                     _loadingLiveData.postValue(false);
-                    emitter.emit("Check your credentials");
+                    appExecutor.mainThread().execute(() -> {
+                        emitter.emit("Check your credentials");
+                    });
+
                 }
             }
 
             @Override
             public void onFailure(Call<LoginUser> call, Throwable t) {
                 _loadingLiveData.postValue(false);
-                emitter.emit("Login failed");
+                appExecutor.mainThread().execute(() -> {
+                    emitter.emit("Login failed");
+                });
                 saveLoginStatus(false);
             }
         });
     }
 
-    public void logout(){
+    public void logout() {
         saveEmail("");
         saveLoginStatus(false);
     }
