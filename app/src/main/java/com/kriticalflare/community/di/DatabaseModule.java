@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.room.Room;
 
 import com.kriticalflare.community.data.local.AppDatabase;
+import com.kriticalflare.community.emergency.data.model.EmergencyDao;
 import com.kriticalflare.community.meetings.data.model.MeetingDao;
 
 import javax.inject.Singleton;
@@ -22,13 +23,18 @@ public class DatabaseModule {
     @Singleton
     @Provides
     AppDatabase providesAppDatabase(@ApplicationContext Context context) {
-        return  Room
+        return Room
                 .databaseBuilder(context, AppDatabase.class, "SocietyDatabase")
                 .fallbackToDestructiveMigration().build();
     }
 
     @Provides
-    MeetingDao providesMeetingDao(AppDatabase database){
+    MeetingDao providesMeetingDao(AppDatabase database) {
         return database.meetingDao();
+    }
+
+    @Provides
+    EmergencyDao providesEmergencyDao(AppDatabase database) {
+        return database.emergencyDao();
     }
 }

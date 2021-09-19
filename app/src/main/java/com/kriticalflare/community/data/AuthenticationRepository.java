@@ -84,7 +84,9 @@ public class AuthenticationRepository {
             @Override
             public void onFailure(Call<RegisterUser> call, Throwable t) {
                 _loadingLiveData.postValue(false);
-                emitter.emit("Registration failed");
+                appExecutor.mainThread().execute(() -> {
+                    emitter.emit("Registration failed");
+                });
             }
         });
     }

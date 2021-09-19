@@ -56,4 +56,14 @@
         android:id="@+id/action_global_eventsFragment"
         app:destination="@id/eventsFragment"
         app:popUpTo="@id/meetingsFragment" />
+    <fragment
+        android:id="@+id/emergencyFragment"
+        android:name="com.kriticalflare.community.emergency.ui.EmergencyFragment"
+        android:label="fragment_emergency"
+        tools:layout="@layout/fragment_emergency" />
+    <action
+        android:id="@+id/action_global_emergencyFragment"
+        app:destination="@id/emergencyFragment"
+        app:popUpTo="@id/meetingsFragment"
+        app:popUpToInclusive="false" />
 </navigation>

@@ -19,11 +19,8 @@ import com.kriticalflare.community.AuthenticationViewModel;
 import com.kriticalflare.community.R;
 import com.kriticalflare.community.databinding.FragmentMeetingsBinding;
 
-import java.util.Objects;
-
 import dagger.hilt.android.AndroidEntryPoint;
 import dev.chrisbanes.insetter.Insetter;
-import dev.chrisbanes.insetter.Side;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -56,7 +53,7 @@ public class MeetingsFragment extends Fragment {
         TypedValue tv = new TypedValue();
         if (requireContext().getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
             int actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
-            binding.meetingsRecycler.setPadding(0,0,0,actionBarHeight);
+            binding.meetingsRecycler.setPadding(0, 0, 0, actionBarHeight);
         }
         meetingsAdapter = new MeetingsAdapter();
         binding.meetingsRecycler.setAdapter(meetingsAdapter);

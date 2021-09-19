@@ -87,6 +87,10 @@ public class MainActivity extends AppCompatActivity {
                     setSheetVisible(true);
                     navSheetBinding.myToolbar.setTitle("Events");
                     break;
+                case R.id.emergencyFragment:
+                    setSheetVisible(true);
+                    navSheetBinding.myToolbar.setTitle("Emergency");
+                    break;
                 case R.id.homeFragment:
                     setSheetVisible(true);
                     navSheetBinding.myToolbar.setTitle("Home");
@@ -120,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                     navController.navigate(R.id.action_global_homeFragment);
                     break;
                 case R.id.nav_emergency:
-                    navController.navigate(R.id.action_global_homeFragment);
+                    navController.navigate(R.id.action_global_emergencyFragment);
                     break;
                 case R.id.nav_logout:
                     authViewModel.logout();
