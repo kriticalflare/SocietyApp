@@ -41,9 +41,6 @@ public class RegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentRegisterBinding.inflate(inflater, container, false);
-        Insetter.builder()
-                .paddingBottom(WindowInsetsCompat.Type.ime() + WindowInsetsCompat.Type.systemBars(), true)
-                .applyToView(binding.registerContainer);
 
         binding.registerButton.setOnClickListener(view -> {
             if (binding.nameTextField.getEditText() != null

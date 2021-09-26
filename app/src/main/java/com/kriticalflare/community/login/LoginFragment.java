@@ -60,9 +60,6 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentLoginBinding.inflate(inflater, container, false);
-        Insetter.builder()
-                .paddingBottom(WindowInsetsCompat.Type.ime() + WindowInsetsCompat.Type.systemBars(), true)
-                .applyToView(binding.loginContainer);
         binding.loginButton.setOnClickListener(view -> {
             if (binding.emailTextfield.getEditText() != null
                     && binding.passwordTextfield.getEditText() != null
