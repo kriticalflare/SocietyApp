@@ -1,6 +1,7 @@
 package com.kriticalflare.community.network;
 
 import com.kriticalflare.community.emergency.data.model.EmergencyResponse;
+import com.kriticalflare.community.events.data.model.EventsResponse;
 import com.kriticalflare.community.meetings.data.model.MeetingsResponse;
 
 import retrofit2.Call;
@@ -13,4 +14,7 @@ public interface ApiService {
 
     @GET("emergency_number")
     Call<EmergencyResponse> getEmergencies();
+
+    @GET("events")
+    Call<EventsResponse> getEvents();
 }

@@ -9,19 +9,24 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.kriticalflare.community.AuthenticationViewModel;
 import com.kriticalflare.community.R;
 import com.kriticalflare.community.databinding.FragmentEventsBinding;
+import com.kriticalflare.community.events.data.model.Events;
+import com.kriticalflare.community.util.Resource;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 
+import java.util.List;
+
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subscribers.DisposableSubscriber;
@@ -33,7 +38,9 @@ public class EventsFragment extends Fragment {
     public static final String TAG = "EVENTS_FRAGMENT";
     private FragmentEventsBinding binding;
     private AuthenticationViewModel authViewModel;
+    private EventsViewModel eventsViewModel;
     private CompositeDisposable compositeDisposable;
+    private EventsAdapter eventsAdapter;
 
     public EventsFragment() {
         // Required empty public constructor
@@ -49,6 +56,9 @@ public class EventsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentEventsBinding.inflate(inflater, container, false);
+        eventsAdapter = new EventsAdapter();
+        binding.eventsRecycler.setAdapter(eventsAdapter);
+        binding.eventsRecycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
         return binding.getRoot();
     }
 
@@ -56,6 +66,7 @@ public class EventsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         authViewModel = new ViewModelProvider(requireActivity()).get(AuthenticationViewModel.class);
+        eventsViewModel = new ViewModelProvider(this).get(EventsViewModel.class);
         compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(
                 authViewModel.isLoggedIn()
@@ -65,7 +76,6 @@ public class EventsFragment extends Fragment {
                             @Override
                             public void onNext(Boolean status) {
                                 Log.d(TAG, "LOGIN STATUS " + status);
-                                binding.text.setText("Login status " + status);
                                 if(!status){
                                     Navigation.findNavController(binding.getRoot()).navigate(R.id.action_global_loginFragment);
                                 }
@@ -83,9 +93,27 @@ public class EventsFragment extends Fragment {
                             }
                         })
         );
-
-        binding.togglestatus.setOnClickListener(v -> {
-            authViewModel.setLoggedIn(!(Math.random() < 0.5));
+        eventsViewModel.getEvents().observe(getViewLifecycleOwner(), listResource -> {
+            switch (listResource.status){
+                case SUCCESS:
+                    eventsAdapter.submitList(listResource.data);
+                    binding.eventsRecycler.setVisibility(View.VISIBLE);
+                    binding.progressIndicator.setVisibility(View.GONE);
+                    binding.statusMessage.setVisibility(View.GONE);
+                    break;
+                case LOADING:
+                    binding.eventsRecycler.setVisibility(View.GONE);
+                    binding.progressIndicator.setVisibility(View.VISIBLE);
+                    binding.statusMessage.setVisibility(View.GONE);
+                    break;
+                case ERROR:
+                case NO_NETWORK:
+                    binding.eventsRecycler.setVisibility(View.GONE);
+                    binding.progressIndicator.setVisibility(View.GONE);
+                    binding.statusMessage.setText(listResource.apiMessage);
+                    binding.statusMessage.setVisibility(View.VISIBLE);
+                    break;
+            }
         });
     }
 

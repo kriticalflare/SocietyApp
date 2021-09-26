@@ -6,6 +6,7 @@ import androidx.room.Room;
 
 import com.kriticalflare.community.data.local.AppDatabase;
 import com.kriticalflare.community.emergency.data.model.EmergencyDao;
+import com.kriticalflare.community.events.data.model.EventsDao;
 import com.kriticalflare.community.meetings.data.model.MeetingDao;
 
 import javax.inject.Singleton;
@@ -36,5 +37,10 @@ public class DatabaseModule {
     @Provides
     EmergencyDao providesEmergencyDao(AppDatabase database) {
         return database.emergencyDao();
+    }
+
+    @Provides
+    EventsDao providesEventsDao(AppDatabase database) {
+        return database.eventsDao();
     }
 }

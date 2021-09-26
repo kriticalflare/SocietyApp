@@ -13,7 +13,6 @@ import com.kriticalflare.community.util.Resource;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import retrofit2.Call;
 import retrofit2.Response;
