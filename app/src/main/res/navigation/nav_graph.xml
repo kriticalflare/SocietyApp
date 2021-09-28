@@ -66,4 +66,14 @@
         app:destination="@id/emergencyFragment"
         app:popUpTo="@id/meetingsFragment"
         app:popUpToInclusive="false" />
+    <fragment
+        android:id="@+id/parkingFragment"
+        android:name="com.kriticalflare.community.parking.ParkingFragment"
+        android:label="fragment_parking"
+        tools:layout="@layout/fragment_parking" />
+    <action
+        android:id="@+id/action_global_parkingFragment"
+        app:destination="@id/parkingFragment"
+        app:popUpTo="@id/meetingsFragment"
+        app:popUpToInclusive="false" />
 </navigation>

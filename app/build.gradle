@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 apply plugin: 'dagger.hilt.android.plugin'
 
@@ -27,9 +28,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
     buildFeatures {
         viewBinding true
+    }
+    secrets {
+        propertiesFileName 'secrets.properties'
     }
 }
 
@@ -72,4 +75,5 @@ dependencies {
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
+    implementation "com.google.android.gms:play-services-maps:17.0.1"
 }

@@ -25,6 +25,8 @@ import com.kriticalflare.community.databinding.BottomNavSheetBinding;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import dev.chrisbanes.insetter.Insetter;
+import dev.chrisbanes.insetter.OnApplyInsetsListener;
+import dev.chrisbanes.insetter.ViewState;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
@@ -91,6 +93,10 @@ public class MainActivity extends AppCompatActivity {
                     setSheetVisible(true);
                     navSheetBinding.myToolbar.setTitle("Emergency");
                     break;
+                case R.id.parkingFragment:
+                    setSheetVisible(true);
+                    navSheetBinding.myToolbar.setTitle("Parking");
+                    break;
                 case R.id.homeFragment:
                     setSheetVisible(true);
                     navSheetBinding.myToolbar.setTitle("Home");
@@ -121,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                     navController.navigate(R.id.action_global_homeFragment);
                     break;
                 case R.id.nav_parking:
-                    navController.navigate(R.id.action_global_homeFragment);
+                    navController.navigate(R.id.action_global_parkingFragment);
                     break;
                 case R.id.nav_emergency:
                     navController.navigate(R.id.action_global_emergencyFragment);
