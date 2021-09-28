@@ -1,11 +1,13 @@
 package com.kriticalflare.community.parking.ui;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +17,8 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.transition.MaterialArcMotion;
 import com.google.android.material.transition.MaterialContainerTransform;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.kriticalflare.community.AuthenticationViewModel;
 import com.kriticalflare.community.R;
 import com.kriticalflare.community.databinding.FragmentScannerBinding;
@@ -53,6 +57,13 @@ public class ScannerFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentScannerBinding.inflate(inflater, container, false);
+        binding.scanButton.setOnClickListener(v -> {
+            IntentIntegrator.forSupportFragment(this)
+                    .setOrientationLocked(false)
+                    .setBarcodeImageEnabled(true)
+                    .setPrompt("Scan a QRCODE")
+                    .initiateScan();
+        });
         return binding.getRoot();
     }
 
@@ -87,6 +98,20 @@ public class ScannerFragment extends Fragment {
                             }
                         })
         );
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            if (result.getContents() == null) {
+                Toast.makeText(getContext(), "Cancelled", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getContext(), "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     @Override

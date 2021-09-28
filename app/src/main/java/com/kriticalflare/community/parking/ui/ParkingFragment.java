@@ -131,7 +131,6 @@ public class ParkingFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        binding.mapView.onSaveInstanceState(outState);
     }
 
     @Override

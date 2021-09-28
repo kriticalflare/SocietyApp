@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.kriticalflare.community">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
     <queries>
         <!-- Specific intents you query for -->
         <intent>
@@ -17,6 +19,7 @@
         android:supportsRtl="true"
         android:name=".SocietyApp"
         android:networkSecurityConfig="@xml/network_security_config"
+        android:hardwareAccelerated="true"
         android:theme="@style/Theme.Splash">
         <activity
             android:name=".MainActivity"
