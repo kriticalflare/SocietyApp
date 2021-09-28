@@ -68,12 +68,21 @@
         app:popUpToInclusive="false" />
     <fragment
         android:id="@+id/parkingFragment"
-        android:name="com.kriticalflare.community.parking.ParkingFragment"
+        android:name="com.kriticalflare.community.parking.ui.ParkingFragment"
         android:label="fragment_parking"
-        tools:layout="@layout/fragment_parking" />
+        tools:layout="@layout/fragment_parking" >
+        <action
+            android:id="@+id/action_parkingFragment_to_scannerFragment"
+            app:destination="@id/scannerFragment" />
+    </fragment>
     <action
         android:id="@+id/action_global_parkingFragment"
         app:destination="@id/parkingFragment"
         app:popUpTo="@id/meetingsFragment"
         app:popUpToInclusive="false" />
+    <fragment
+        android:id="@+id/scannerFragment"
+        android:name="com.kriticalflare.community.parking.ui.ScannerFragment"
+        android:label="fragment_scanner"
+        tools:layout="@layout/fragment_scanner" />
 </navigation>

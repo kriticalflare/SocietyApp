@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".parking.ParkingFragment">
+    android:transitionGroup="true"
+    tools:context=".parking.ui.ParkingFragment">
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/map_view"
@@ -24,6 +25,7 @@
         app:icon="@drawable/ic_outline_directions_car_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:transitionName="scanner_transform"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

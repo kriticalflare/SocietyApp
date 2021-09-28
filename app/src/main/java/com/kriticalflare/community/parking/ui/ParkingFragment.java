@@ -1,26 +1,26 @@
-package com.kriticalflare.community.parking;
+package com.kriticalflare.community.parking.ui;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
-
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.FragmentNavigator;
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.material.transition.Hold;
+import com.google.android.material.transition.MaterialElevationScale;
 import com.kriticalflare.community.AuthenticationViewModel;
 import com.kriticalflare.community.R;
 import com.kriticalflare.community.databinding.FragmentParkingBinding;
-
-import java.util.Objects;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -42,6 +42,12 @@ public class ParkingFragment extends Fragment implements OnMapReadyCallback {
     private TypedValue tv;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setExitTransition(new Hold());
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -54,7 +60,19 @@ public class ParkingFragment extends Fragment implements OnMapReadyCallback {
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) binding.parkingFab.getLayoutParams();
             params.setMargins(params.leftMargin, params.topMargin, params.rightMargin, 2 * actionBarHeight);
         }
-        return  binding.getRoot();
+        binding.parkingFab.setOnClickListener(v -> {
+            FragmentNavigator.Extras extras = new FragmentNavigator.Extras.Builder()
+                    .addSharedElement(binding.parkingFab, "scanner_transform")
+                    .build();
+            Navigation
+                    .findNavController(binding.getRoot())
+                    .navigate(
+                            R.id.action_parkingFragment_to_scannerFragment,
+                            null,
+                            null,
+                            extras);
+        });
+        return binding.getRoot();
     }
 
     @Override

@@ -87,15 +87,22 @@ public class MainActivity extends AppCompatActivity {
             switch (navDestination.getId()){
                 case R.id.eventsFragment:
                     setSheetVisible(true);
+                    navSheetBinding.navigationView.setCheckedItem(R.id.nav_events);
                     navSheetBinding.myToolbar.setTitle("Events");
                     break;
                 case R.id.emergencyFragment:
                     setSheetVisible(true);
+                    navSheetBinding.navigationView.setCheckedItem(R.id.nav_emergency);
                     navSheetBinding.myToolbar.setTitle("Emergency");
                     break;
                 case R.id.parkingFragment:
                     setSheetVisible(true);
+                    navSheetBinding.navigationView.setCheckedItem(R.id.nav_parking);
                     navSheetBinding.myToolbar.setTitle("Parking");
+                    break;
+                case R.id.scannerFragment:
+                    setSheetVisible(false);
+                    navSheetBinding.navigationView.setCheckedItem(R.id.nav_none);
                     break;
                 case R.id.homeFragment:
                     setSheetVisible(true);
