@@ -23,4 +23,8 @@ public class MeetingsViewModel extends ViewModel {
         this.repo = repo;
         meetings = repo.getMeetings();
     }
+
+    public void refreshMeetings(){
+        repo.refreshMeetings();
+    }
 }

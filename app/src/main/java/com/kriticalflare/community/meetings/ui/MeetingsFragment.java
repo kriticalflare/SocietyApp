@@ -115,6 +115,12 @@ public class MeetingsFragment extends Fragment {
                     break;
             }
         });
+
+        binding.swipeRefresh.setOnRefreshListener(() -> {
+            meetingsViewModel.refreshMeetings();
+            Runnable runnable = () -> binding.swipeRefresh.setRefreshing(false);
+            binding.swipeRefresh.postDelayed(runnable, 1000);
+        });
     }
 
     @Override

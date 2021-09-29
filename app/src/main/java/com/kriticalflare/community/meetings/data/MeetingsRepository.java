@@ -55,4 +55,8 @@ public class MeetingsRepository {
         };
         return networkBoundResource.asLiveData();
     }
+
+    public void refreshMeetings(){
+        networkBoundResource.triggerNetworkRequest();
+    }
 }
