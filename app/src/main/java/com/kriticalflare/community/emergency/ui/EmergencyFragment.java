@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.material.transition.MaterialSharedAxis;
 import com.kriticalflare.community.AuthenticationViewModel;
 import com.kriticalflare.community.R;
 import com.kriticalflare.community.databinding.FragmentEmergencyBinding;
@@ -34,6 +35,13 @@ public class EmergencyFragment extends Fragment {
     private EmergencyViewModel emergencyViewModel;
     private FragmentEmergencyBinding binding;
     private EmergencyAdapter emergencyAdapter;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
+        setExitTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, false));
+    }
 
     @Nullable
     @Override

@@ -18,6 +18,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.material.transition.Hold;
 import com.google.android.material.transition.MaterialElevationScale;
+import com.google.android.material.transition.MaterialSharedAxis;
 import com.kriticalflare.community.AuthenticationViewModel;
 import com.kriticalflare.community.R;
 import com.kriticalflare.community.databinding.FragmentParkingBinding;
@@ -44,7 +45,8 @@ public class ParkingFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setExitTransition(new Hold());
+        setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
+        setExitTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, false));
     }
 
     @Override
@@ -52,6 +54,7 @@ public class ParkingFragment extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentParkingBinding.inflate(inflater, container, false);
+        setExitTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, false));
         binding.mapView.onCreate(savedInstanceState);
         binding.mapView.getMapAsync(this);
         tv = new TypedValue();
@@ -64,6 +67,7 @@ public class ParkingFragment extends Fragment implements OnMapReadyCallback {
             FragmentNavigator.Extras extras = new FragmentNavigator.Extras.Builder()
                     .addSharedElement(binding.parkingFab, "scanner_transform")
                     .build();
+            setExitTransition(new Hold());
             Navigation
                     .findNavController(binding.getRoot())
                     .navigate(
