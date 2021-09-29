@@ -11,10 +11,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.google.android.material.color.MaterialColors;
 import com.google.android.material.transition.MaterialArcMotion;
 import com.google.android.material.transition.MaterialContainerTransform;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -23,6 +25,7 @@ import com.kriticalflare.community.AuthenticationViewModel;
 import com.kriticalflare.community.R;
 import com.kriticalflare.community.databinding.FragmentScannerBinding;
 
+import dev.chrisbanes.insetter.Insetter;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -46,9 +49,10 @@ public class ScannerFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MaterialContainerTransform transform = new MaterialContainerTransform();
-        transform.setFadeMode(MaterialContainerTransform.FADE_MODE_THROUGH);
+        transform.setFadeMode(MaterialContainerTransform.FADE_MODE_CROSS);
         transform.setScrimColor(Color.TRANSPARENT);
         transform.setPathMotion(new MaterialArcMotion());
+        transform.setAllContainerColors(MaterialColors.getColor(requireContext(), R.attr.colorSurface, Color.GRAY));
         setSharedElementEnterTransition(transform);
     }
 
@@ -57,7 +61,7 @@ public class ScannerFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentScannerBinding.inflate(inflater, container, false);
-        binding.scanButton.setOnClickListener(v -> {
+        binding.scanFab.setOnClickListener(v -> {
             IntentIntegrator.forSupportFragment(this)
                     .setOrientationLocked(false)
                     .setBarcodeImageEnabled(true)
@@ -70,7 +74,9 @@ public class ScannerFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        Insetter.builder()
+                .padding(WindowInsetsCompat.Type.systemBars())
+                .applyToView(binding.getRoot());
         authenticationViewModel = new ViewModelProvider(requireActivity()).get(AuthenticationViewModel.class);
         compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(
@@ -107,7 +113,7 @@ public class ScannerFragment extends Fragment {
             if (result.getContents() == null) {
                 Toast.makeText(getContext(), "Cancelled", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(getContext(), "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                binding.scanResult.setText(result.getContents());
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

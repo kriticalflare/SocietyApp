@@ -7,15 +7,101 @@
     android:transitionName="scanner_transform"
     tools:context=".parking.ui.ScannerFragment">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/scan_button"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/parking_anim"
+        android:layout_width="match_parent"
+        android:layout_height="328dp"
+        android:layout_margin="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/parking"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/parking_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Scan"
-        style="@style/Widget.MaterialComponents.Button"
         android:layout_margin="8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="8dp"
+        style="@style/TextAppearance.MaterialComponents.Overline"
+        android:textSize="16dp"
+        app:layout_constraintTop_toBottomOf="@id/parking_anim"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textAlignment="center"
+        android:text="Scan the QR code to claim/leave the parking spot"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/scan_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Parking Code"
+        app:layout_constraintTop_toBottomOf="@id/parking_info"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="8dp"
+        android:padding="8dp"
+        />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/scan_result"
+        style="@style/TextAppearance.MaterialComponents.Headline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scan_label"
+        android:text="N/A"
+        tools:text="PARKING1" />
+    <com.nambimobile.widgets.efab.ExpandableFabLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.nambimobile.widgets.efab.Overlay
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:overlay_orientation="portrait"/>
+
+        <com.nambimobile.widgets.efab.ExpandableFab
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            app:efab_icon="@drawable/ic_outline_create_24"
+            app:efab_color="?attr/colorPrimary"
+            app:efab_orientation="portrait"/>
+        <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/scan_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_orientation="portrait"
+            app:label_text="Scan QR Code"
+            app:fab_color="?attr/colorPrimary"
+            app:fab_icon="@drawable/ic_outline_qr_code_scanner_24"
+            />
+        <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/claim_parking_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_orientation="portrait"
+            app:label_text="Claim Parking"
+            app:fab_color="?attr/colorPrimary"
+            app:fab_icon="@drawable/ic_outline_directions_car_24"
+            />
+        <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/clear_parking_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_orientation="portrait"
+            app:fab_color="?attr/colorPrimary"
+            app:label_text="Clear Parking"
+            app:fab_icon="@drawable/ic_outline_clear_all_24"
+            />
+    </com.nambimobile.widgets.efab.ExpandableFabLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
