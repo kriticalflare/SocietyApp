@@ -1,10 +1,14 @@
 package com.kriticalflare.community.di;
 
+import com.kriticalflare.community.data.local.PrefsDataStore;
 import com.kriticalflare.community.network.ApiService;
 import com.kriticalflare.community.network.AuthService;
+import com.kriticalflare.community.network.AuthenticatedService;
+import com.kriticalflare.community.network.TokenInterceptor;
 import com.kriticalflare.community.util.AppExecutor;
 import com.kriticalflare.community.util.Constants;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -21,6 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetworkModule {
     @Singleton
     @Provides
+    @Named("unauthenticated")
     public OkHttpClient provideOkHttpClient() {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.level(HttpLoggingInterceptor.Level.BODY);
@@ -29,7 +34,17 @@ public class NetworkModule {
 
     @Singleton
     @Provides
-    public AuthService provideAuthClientApi(OkHttpClient okHttpClient, AppExecutor appExecutor) {
+    @Named("authenticated")
+    public OkHttpClient provideAuthOkHttpClient(PrefsDataStore dataStore) {
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+        httpLoggingInterceptor.level(HttpLoggingInterceptor.Level.BODY);
+        TokenInterceptor tokenInterceptor = new TokenInterceptor(dataStore);
+        return new OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).addInterceptor(tokenInterceptor).build();
+    }
+
+    @Singleton
+    @Provides
+    public AuthService provideAuthClientApi(@Named("unauthenticated") OkHttpClient okHttpClient, AppExecutor appExecutor) {
         return new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .client(okHttpClient)
@@ -41,7 +56,7 @@ public class NetworkModule {
 
     @Singleton
     @Provides
-    public ApiService provideApiClient(OkHttpClient okHttpClient, AppExecutor appExecutor) {
+    public ApiService provideApiClient(@Named("unauthenticated") OkHttpClient okHttpClient, AppExecutor appExecutor) {
         return new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .client(okHttpClient)
@@ -49,5 +64,17 @@ public class NetworkModule {
                 .callbackExecutor(appExecutor.networkIO())
                 .build()
                 .create(ApiService.class);
+    }
+
+    @Singleton
+    @Provides
+    public AuthenticatedService provideAuthenticatedClient(@Named("authenticated") OkHttpClient authOkHttpClient, AppExecutor appExecutor) {
+        return new Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .client(authOkHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .callbackExecutor(appExecutor.networkIO())
+                .build()
+                .create(AuthenticatedService.class);
     }
 }

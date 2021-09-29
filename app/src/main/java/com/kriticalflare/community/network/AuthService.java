@@ -1,5 +1,6 @@
 package com.kriticalflare.community.network;
 
+import com.kriticalflare.community.model.LoginResponse;
 import com.kriticalflare.community.model.LoginUser;
 import com.kriticalflare.community.model.RegisterUser;
 
@@ -13,5 +14,5 @@ public interface AuthService {
     Call<RegisterUser> registerUser(@Body RegisterUser user);
 
     @POST("login")
-    Call<LoginUser> login(@Body LoginUser user);
+    Call<LoginResponse> login(@Body LoginUser user);
 }

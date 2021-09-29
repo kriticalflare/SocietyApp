@@ -1,5 +1,6 @@
 package com.kriticalflare.community.data;
 
+import androidx.annotation.NonNull;
 import androidx.datastore.preferences.core.MutablePreferences;
 import androidx.datastore.preferences.core.Preferences;
 import androidx.datastore.preferences.core.PreferencesKeys;
@@ -7,6 +8,8 @@ import androidx.datastore.rxjava3.RxDataStore;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.kriticalflare.community.data.local.PrefsDataStore;
+import com.kriticalflare.community.model.LoginResponse;
 import com.kriticalflare.community.model.LoginUser;
 import com.kriticalflare.community.model.RegisterUser;
 import com.kriticalflare.community.network.AuthService;
@@ -27,7 +30,7 @@ import retrofit2.Response;
 
 public class AuthenticationRepository {
 
-    private final RxDataStore<Preferences> dataStore;
+    private PrefsDataStore dataStore;
     private final AuthService authService;
     private final EventEmitter<String> emitter;
     public EventSource<String> errorEvents;
@@ -36,7 +39,7 @@ public class AuthenticationRepository {
     private AppExecutor appExecutor;
 
     @Inject
-    AuthenticationRepository(RxDataStore<Preferences> dataStore, AuthService authService, AppExecutor appExecutor) {
+    AuthenticationRepository(PrefsDataStore dataStore, AuthService authService, AppExecutor appExecutor) {
         this.dataStore = dataStore;
         this.authService = authService;
         this.appExecutor = appExecutor;
@@ -44,22 +47,6 @@ public class AuthenticationRepository {
         _loadingLiveData = new MutableLiveData<>(false);
         loading = _loadingLiveData;
         errorEvents = emitter;
-    }
-
-    public void saveEmail(String email) {
-        dataStore.updateDataAsync(preferences -> {
-            MutablePreferences _prefs = preferences.toMutablePreferences();
-            _prefs.set(KEY_EMAIL, email);
-            return Single.just(_prefs);
-        });
-    }
-
-    public void saveLoginStatus(boolean status) {
-        dataStore.updateDataAsync(preferences -> {
-            MutablePreferences _prefs = preferences.toMutablePreferences();
-            _prefs.set(KEY_IS_LOGGED_IN, status);
-            return Single.just(_prefs);
-        });
     }
 
     public void register(RegisterUser user) {
@@ -93,13 +80,18 @@ public class AuthenticationRepository {
 
     public void login(LoginUser user) {
         _loadingLiveData.setValue(true);
-        authService.login(user).enqueue(new Callback<LoginUser>() {
+        authService.login(user).enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<LoginUser> call, Response<LoginUser> response) {
+            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                 if (response.isSuccessful()) {
                     _loadingLiveData.postValue(false);
-                    saveEmail(user.email);
-                    saveLoginStatus(true);
+                    if(response.body() != null){
+                        dataStore.saveEmail(user.email);
+                        dataStore.saveToken(response.body().getToken());
+                        dataStore.saveLoginStatus(true);
+                    } else {
+                        dataStore.saveLoginStatus(false);
+                    }
                 } else {
                     _loadingLiveData.postValue(false);
                     appExecutor.mainThread().execute(() -> {
@@ -110,27 +102,31 @@ public class AuthenticationRepository {
             }
 
             @Override
-            public void onFailure(Call<LoginUser> call, Throwable t) {
+            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
                 _loadingLiveData.postValue(false);
                 appExecutor.mainThread().execute(() -> {
                     emitter.emit("Login failed");
                 });
-                saveLoginStatus(false);
+                dataStore.saveLoginStatus(false);
             }
         });
     }
 
     public void logout() {
-        saveEmail("");
-        saveLoginStatus(false);
+        dataStore.saveEmail("");
+        dataStore.saveLoginStatus(false);
+        dataStore.saveToken("");
+    }
+
+    public void saveLoginStatus(boolean status){
+        dataStore.saveLoginStatus(status);
     }
 
     public Flowable<Boolean> getLoginStatus() {
-        return dataStore.data().map(preferences -> Optional.ofNullable(preferences.get(KEY_IS_LOGGED_IN)).orElse(false));
+        return dataStore.getLoginStatus();
     }
 
-    public static final Preferences.Key<String> KEY_EMAIL = PreferencesKeys.stringKey("key_email");
-    public static final Preferences.Key<Boolean> KEY_IS_LOGGED_IN =
-            PreferencesKeys.booleanKey("key_is_logged_in");
-    public static final Preferences.Key<String> KEY_JWT = PreferencesKeys.stringKey("jwt");
+    public Flowable<String> getJWTToken() {
+        return dataStore.getJWTToken();
+    }
 }

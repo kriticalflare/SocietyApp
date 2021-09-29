@@ -46,6 +46,7 @@ dependencies {
     def datastore_version = "1.0.0"
     def hilt_version = "2.38.1"
     def room_version = "2.3.0"
+    def permissions_version = "4.9.1"
 
     // Java language implementation
     implementation "androidx.core:core:$core_version"
@@ -78,4 +79,5 @@ dependencies {
     implementation "com.google.android.gms:play-services-maps:17.0.1"
     implementation('com.journeyapps:zxing-android-embedded:4.2.0') { transitive = false }
     implementation 'com.google.zxing:core:3.3.0'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
 }

@@ -46,6 +46,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
                             "Server is currently experiencing issues, try again after some time"));
                 } else if (isSuccessfulResponse(response)) {
                     saveCallResult(response.body());
+//                    TODO: postvalue from response itself? or check if loadFromDatabase is null
                     result.postValue(Resource.success(loadFromDatabase()));
                 } else {
                     result.postValue(Resource.error(loadFromDatabase(), response.message()));
