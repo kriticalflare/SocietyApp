@@ -17,9 +17,12 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.transition.TransitionManager;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.transition.MaterialFade;
+import com.google.android.material.transition.MaterialFadeThrough;
 import com.kriticalflare.community.databinding.ActivityMainBinding;
 import com.kriticalflare.community.databinding.BottomNavSheetBinding;
 
@@ -166,12 +169,15 @@ public class MainActivity extends AppCompatActivity {
         bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                MaterialFadeThrough fade = new MaterialFadeThrough();
                 switch (newState) {
                     case BottomSheetBehavior.STATE_COLLAPSED:
                         closeBottomSheetCallback.setEnabled(false);
+                        TransitionManager.beginDelayedTransition(binding.getRoot(), fade);
                         binding.scrim.setVisibility(View.GONE);
                         break;
                     case BottomSheetBehavior.STATE_EXPANDED:
+                        TransitionManager.beginDelayedTransition(binding.getRoot(), fade);
                         binding.scrim.setVisibility(View.VISIBLE);
                         closeBottomSheetCallback.setEnabled(true);
                         break;
