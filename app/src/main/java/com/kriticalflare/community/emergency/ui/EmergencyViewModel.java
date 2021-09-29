@@ -26,4 +26,8 @@ public class EmergencyViewModel extends ViewModel {
     public LiveData<Resource<List<EmergencyItem>>> getEmergencies(){
         return  repo.getEmergencies();
     }
+
+    public void refreshEmergencies(){
+        repo.refreshEmergencies();
+    }
 }

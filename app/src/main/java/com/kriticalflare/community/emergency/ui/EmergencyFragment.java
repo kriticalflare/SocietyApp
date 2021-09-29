@@ -98,6 +98,11 @@ public class EmergencyFragment extends Fragment {
                     break;
             }
         });
+        binding.swipeRefresh.setOnRefreshListener(() -> {
+            emergencyViewModel.refreshEmergencies();
+            Runnable runnable = () -> binding.swipeRefresh.setRefreshing(false);
+            binding.swipeRefresh.postDelayed(runnable, 1000);
+        });
     }
 
     @Override

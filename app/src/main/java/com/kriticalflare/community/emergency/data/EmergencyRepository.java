@@ -54,4 +54,8 @@ public class EmergencyRepository {
         };
         return networkBoundResource.asLiveData();
     }
+
+    public void refreshEmergencies(){
+        networkBoundResource.triggerNetworkRequest();
+    }
 }
