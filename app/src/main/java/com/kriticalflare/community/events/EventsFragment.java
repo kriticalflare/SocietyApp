@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,13 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.kriticalflare.community.AuthenticationViewModel;
 import com.kriticalflare.community.R;
 import com.kriticalflare.community.databinding.FragmentEventsBinding;
-import com.kriticalflare.community.events.data.model.Events;
-import com.kriticalflare.community.util.Resource;
-
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
-
-import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -76,7 +68,7 @@ public class EventsFragment extends Fragment {
                             @Override
                             public void onNext(Boolean status) {
                                 Log.d(TAG, "LOGIN STATUS " + status);
-                                if(!status){
+                                if (!status) {
                                     Navigation.findNavController(binding.getRoot()).navigate(R.id.action_global_loginFragment);
                                 }
                                 request(1);
@@ -94,7 +86,7 @@ public class EventsFragment extends Fragment {
                         })
         );
         eventsViewModel.getEvents().observe(getViewLifecycleOwner(), listResource -> {
-            switch (listResource.status){
+            switch (listResource.status) {
                 case SUCCESS:
                     eventsAdapter.submitList(listResource.data);
                     binding.eventsRecycler.setVisibility(View.VISIBLE);
@@ -114,6 +106,11 @@ public class EventsFragment extends Fragment {
                     binding.statusMessage.setVisibility(View.VISIBLE);
                     break;
             }
+        });
+        binding.swipeRefresh.setOnRefreshListener(() -> {
+            eventsViewModel.refreshEvents();
+            Runnable runnable = () -> binding.swipeRefresh.setRefreshing(false);
+            binding.swipeRefresh.postDelayed(runnable, 1000);
         });
     }
 

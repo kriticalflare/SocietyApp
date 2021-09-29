@@ -57,4 +57,8 @@ public class EventsRepository {
         };
         return networkBoundResource.asLiveData();
     }
+
+    public void refreshEvents(){
+        networkBoundResource.triggerNetworkRequest();
+    }
 }

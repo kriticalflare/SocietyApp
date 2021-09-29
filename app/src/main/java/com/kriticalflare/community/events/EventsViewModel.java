@@ -27,4 +27,8 @@ public class EventsViewModel extends ViewModel {
     public LiveData<Resource<List<Events>>> getEvents(){
         return  repo.getEvents();
     }
+
+    public void refreshEvents(){
+        repo.refreshEvents();
+    }
 }

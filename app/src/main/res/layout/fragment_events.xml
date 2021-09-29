@@ -6,14 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".events.EventsFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/events_recycler"
-        android:layout_width="match_parent"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        />
+        android:id="@+id/swipe_refresh"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/events_recycler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.github.ybq.android.spinkit.SpinKitView
         android:id="@+id/progress_indicator"
