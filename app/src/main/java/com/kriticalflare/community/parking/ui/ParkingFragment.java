@@ -253,7 +253,7 @@ public class ParkingFragment extends Fragment implements OnMapReadyCallback {
                                                             ? BitmapDescriptorFactory.HUE_RED
                                                             : BitmapDescriptorFactory.HUE_BLUE
                                             )
-                                    ).title(otherParkingItem.getUser() != null ? "Occupied" : "Free"));
+                                    ).title(otherParkingItem.getUser() != null ? "Occupied" : "Free: " + otherParkingItem.getQrCode()));
                         });
                     }
                     break;
