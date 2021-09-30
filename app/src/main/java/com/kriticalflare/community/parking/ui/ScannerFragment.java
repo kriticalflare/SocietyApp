@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -24,14 +25,17 @@ import com.google.zxing.integration.android.IntentResult;
 import com.kriticalflare.community.AuthenticationViewModel;
 import com.kriticalflare.community.R;
 import com.kriticalflare.community.databinding.FragmentScannerBinding;
+import com.kriticalflare.community.parking.data.model.ParkingResponse;
+import com.kriticalflare.community.util.Resource;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import dev.chrisbanes.insetter.Insetter;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import io.reactivex.rxjava3.subscribers.DisposableSubscriber;
 
-
+@AndroidEntryPoint
 public class ScannerFragment extends Fragment {
 
     private static final String TAG = "SCANNER_FRAGMENT";
@@ -42,6 +46,7 @@ public class ScannerFragment extends Fragment {
 
     private FragmentScannerBinding binding;
     private AuthenticationViewModel authenticationViewModel;
+    private ScannerViewModel scannerViewModel;
     private CompositeDisposable compositeDisposable;
 
 
@@ -78,6 +83,7 @@ public class ScannerFragment extends Fragment {
                 .padding(WindowInsetsCompat.Type.systemBars())
                 .applyToView(binding.getRoot());
         authenticationViewModel = new ViewModelProvider(requireActivity()).get(AuthenticationViewModel.class);
+        scannerViewModel = new ViewModelProvider(this).get(ScannerViewModel.class);
         compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(
                 authenticationViewModel.isLoggedIn()
@@ -104,6 +110,46 @@ public class ScannerFragment extends Fragment {
                             }
                         })
         );
+
+        binding.claimParkingFab.setOnClickListener(v -> {
+            scannerViewModel.claimParkingSpot(binding.scanResult.getText().toString())
+                    .observe(getViewLifecycleOwner(), parkingResource -> {
+                        String message = parkingResource.data != null ? parkingResource.data.getMessage() : parkingResource.apiMessage;
+                        switch (parkingResource.status){
+                            case SUCCESS:
+                                Toast.makeText(requireContext(), "Successful", Toast.LENGTH_SHORT).show();
+                                break;
+                            case ERROR:
+                                Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show();
+                                break;
+                            case LOADING:
+                                break;
+                            case NO_NETWORK:
+                                Toast.makeText(requireContext(), "Check your internet", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    });
+        });
+
+        binding.clearParkingFab.setOnClickListener(v -> {
+            scannerViewModel.clearParkingSpot(binding.scanResult.getText().toString())
+                    .observe(getViewLifecycleOwner(), parkingResource -> {
+                        String message = parkingResource.data != null ? parkingResource.data.getMessage() : parkingResource.apiMessage;
+                        switch (parkingResource.status){
+                            case SUCCESS:
+                                Toast.makeText(requireContext(), "Successful", Toast.LENGTH_SHORT).show();
+                                break;
+                            case ERROR:
+                                Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show();
+                                break;
+                            case LOADING:
+                                break;
+                            case NO_NETWORK:
+                                Toast.makeText(requireContext(), "Check your internet", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    });
+        });
     }
 
     @Override
